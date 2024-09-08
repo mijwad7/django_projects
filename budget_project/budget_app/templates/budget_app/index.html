@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Budget Tracker</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-4">
+        <h1 class="mb-4">Personal Budget Tracker</h1>
+        <p>Total Income: ${{ total_income }}</p>
+        <p>Total Expenses: ${{ total_expenses }}</p>
+        <p>Remaining Balance: ${{ balance }}</p>
+        <p><a class="btn btn-primary" href="{% url 'add_entry' %}">Add New Entry</a></p>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Description</th>
+                    <th>Amount</th>
+                    <th>Type</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for entry in entries %}
+                <tr>
+                    <td>{{ entry.description }}</td>
+                    <td>${{ entry.amount }}</td>
+                    <td>{{ entry.type }}</td>
+                    <td>
+                        <a class="btn btn-warning btn-sm" href="{% url 'edit_entry' id=forloop.counter0 %}">Edit</a>
+                        <form action="{% url 'delete_entry' id=forloop.counter0 %}" method="post" style="display:inline;">
+                            {% csrf_token %}
+                            <button class="btn btn-danger btn-sm" type="submit">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
