@@ -1,0 +1,28 @@
+{% extends "./base.html" %}
+
+{% block title %}Event List{% endblock %}
+
+{% block content %}
+    <div class="d-flex justify-content-between align-items-center mt-5">
+        <h2>Event List</h2>
+        <a href="{% url 'event_create' %}" class="btn btn-primary">Create New Event</a>
+    </div>
+
+    <div class="row mt-3">
+        {% for event in events %}
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ event.title }}</h5>
+                        <p class="card-text">
+                            Date: {{ event.date }}<br>
+                            Time: {{ event.time }}<br>
+                            Location: {{ event.location }}
+                        </p>
+                        <a href="{% url 'event_detail' event.id %}" class="btn btn-secondary">View Details</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
